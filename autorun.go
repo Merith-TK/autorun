@@ -31,25 +31,24 @@ func startAutorun(drivePath string) {
 	// convert the environment map to a slice
 	env := make([]string, 0, len(conf.Environment))
 
+	if !filepath.IsAbs(conf.Autorun) {
+		conf.Autorun = filepath.Join(drivePath, conf.Autorun)
+	}
+	if !filepath.IsAbs(conf.WorkDir) {
+		conf.WorkDir = filepath.Join(drivePath, conf.WorkDir)
+	}
+
 	// start building the command
 	cmd := exec.Command(conf.Autorun)
 
 	if conf.Isolate {
 		cmd.Env = env
+		cmd.Env = append(cmd.Env, "TEMP="+os.Getenv("TEMP"))
 	} else {
 		cmd.Env = append(os.Environ(), env...)
 	}
 
-	// Set the working directory
-	if conf.WorkDir != "" {
-		cmd.Dir = conf.WorkDir
-	} else {
-		cmd.Dir = drivePath
-	}
-
-	if !filepath.IsAbs(conf.Autorun) {
-		conf.Autorun = filepath.Join(drivePath, conf.Autorun)
-	}
+	cmd.Dir = conf.WorkDir
 
 	// Start the autorun program
 	err = cmd.Start()
