@@ -1,5 +1,9 @@
-## PLEASE GO TO https://github.com/Merith-TK/utils/tree/main/cmd/autorun
+# THIS REPO IS ARCHIVED! 
+Please head to https://github.com/Merith-TK/utils/tree/main/cmd/autorun instead
 
+
+
+-----
 # autorun
 
 This program is a reimplementation of the "autorun" feature that was removed from Windows.
